@@ -1,9 +1,9 @@
 module Katello
-  class GpgKey < Katello::Model
+  class ContentCredentials < Katello::Model
     audited :associations => [:products]
 
     include ForemanTasks::Concerns::ActionSubject
-    include Katello::Authorization::GpgKey
+    include Katello::Authorization::ContentCredentials
     MAX_CONTENT_LINE_LENGTH = 65
 
     GPG_KEY_TYPE = 'gpg_key'.freeze

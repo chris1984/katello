@@ -6,12 +6,12 @@ module Katello
     def models
       @organization = get_organization
       @product = Product.find(katello_products(:fedora).id)
-      @gpg_key = GpgKey.find(katello_gpg_keys(:fedora_gpg_key).id)
-      @cert = GpgKey.find(katello_gpg_keys(:fedora_cert).id)
+      @gpg_key = ContentCredentials.find(katello_gpg_keys(:fedora_gpg_key).id)
+      @cert = ContentCredentials.find(katello_gpg_keys(:fedora_cert).id)
     end
 
     def permissions
-      @resource_type = "Katello::GpgKey"
+      @resource_type = "Katello::ContentCredentials"
       @view_permission = :view_content_credentials
       @create_permission = :create_content_credentials
       @update_permission = :edit_content_credentials

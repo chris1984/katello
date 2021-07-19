@@ -625,7 +625,7 @@ module Katello
     end
 
     def test_pulp_update_needed_with_ssl?
-      cert = GpgKey.find(katello_gpg_keys(:fedora_cert).id)
+      cert = ContentCredentials.find(katello_gpg_keys(:fedora_cert).id)
       refute @fedora_root.pulp_update_needed?
       @fedora_root.ssl_ca_cert_id = cert.id
       @fedora_root.save!

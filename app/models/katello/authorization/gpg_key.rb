@@ -1,5 +1,5 @@
 module Katello
-  module Authorization::GpgKey
+  module Authorization::ContentCredentials
     extend ActiveSupport::Concern
 
     include Authorizable
