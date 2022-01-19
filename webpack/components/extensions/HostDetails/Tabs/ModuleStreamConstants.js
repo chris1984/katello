@@ -1,0 +1,1 @@
+export const MODULE_STREAMS_KEY = 'MODULE_STREAMS';
