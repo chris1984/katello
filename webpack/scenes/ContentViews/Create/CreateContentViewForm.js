@@ -75,6 +75,7 @@ const CreateContentViewForm = ({ setModalOpen }) => {
     >
       <FormGroup label={__('Name')} isRequired fieldId="name">
         <TextInput
+          ouiaId="create-content-view-form-name"
           isRequired
           type="text"
           id="name"
@@ -87,6 +88,7 @@ const CreateContentViewForm = ({ setModalOpen }) => {
       <FormGroup label={__('Label')} isRequired fieldId="label">
         <TextInput
           isRequired
+          ouiaId="create-content-view-form-label"
           type="text"
           id="label"
           aria-label="input_label"
@@ -97,6 +99,7 @@ const CreateContentViewForm = ({ setModalOpen }) => {
       </FormGroup>
       <FormGroup label={__('Description')} fieldId="description">
         <TextArea
+          ouiaId="create-content-view-form-description"
           isRequired
           type="text"
           id="description"
@@ -141,6 +144,7 @@ const CreateContentViewForm = ({ setModalOpen }) => {
       {!composite &&
         <FormGroup isInline fieldId="dependencies">
           <Checkbox
+            ouiaId="create-content-view-form-checkbox-dependencies"
             id="dependencies"
             name="dependencies"
             label={LabelDependencies()}
@@ -151,6 +155,7 @@ const CreateContentViewForm = ({ setModalOpen }) => {
       {!composite &&
         <FormGroup isInline fieldId="importOnly">
           <Checkbox
+            ouiaId="create-content-view-form-checkbox-importonly"
             id="importOnly"
             name="importOnly"
             label={LabelImportOnly()}
@@ -161,6 +166,7 @@ const CreateContentViewForm = ({ setModalOpen }) => {
       {composite &&
         <FormGroup isInline fieldId="autoPublish">
           <Checkbox
+            ouiaId="create-content-view-form-checkbox-autopublish"
             id="autoPublish"
             name="autoPublish"
             label={LabelAutoPublish()}
