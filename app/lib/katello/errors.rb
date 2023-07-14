@@ -136,6 +136,8 @@ module Katello
       end
     end
 
+    class InvalidVirtWhoHost < StandardError; end
+
     class UpstreamConsumerNotFound < StandardError; end
 
     class UpstreamEntitlementGone < StandardError; end

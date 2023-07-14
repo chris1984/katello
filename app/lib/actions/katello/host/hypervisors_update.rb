@@ -125,7 +125,7 @@ module Actions
           end
         end
 
-        # extracts a single field from a given list og hypervisors data.
+        # extracts a single field from a given list of hypervisors data.
         def hypervisors_field(field, hypervisors = @hypervisors)
           hypervisors.map { |h| h[field] }.uniq
         end
@@ -142,10 +142,16 @@ module Actions
 
         def create_host_for_hypervisor(name, organization, location = nil)
           location ||= Location.default_host_subscribe_location!
-          host = ::Host::Managed.new(:name => name, :organization => organization,
-                                     :location => location, :managed => false, :enabled => false)
-          host.save!
-          host
+          begin
+            host = ::Host::Managed.new(:name => name, :organization => organization,
+                                       :location => location, :managed => false, :enabled => false)
+            host.save!
+          rescue
+            # Taken from Foreman's active record error message
+            raise ::Katello::Errors::InvalidVirtWhoHost, "The hostname #{name} can contain only lowercase letters, numbers, dashes and dots according to RFC921, RFC952 and RFC1123"
+          else
+            host
+          end
         end
 
         def update_host(uuid, host)
