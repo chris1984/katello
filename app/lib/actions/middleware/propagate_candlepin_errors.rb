@@ -23,7 +23,7 @@ module Actions
                       else
                         ::Katello::Errors::UpstreamCandlepinError
                       end
-        raise(error_class.from_exception(e) || e)
+        raise(error_class.from_exception(e) || e) unless error_class.code == 404
       end
     end
   end
