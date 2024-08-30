@@ -53,8 +53,15 @@ export const useHostsBulkSelect = ({ initialSelectedHosts, modalIsOpen }) => {
   };
 };
 
-export const getPackagesUrl = selectedAction =>
-  `${katelloApi.getApiUrl('/packages/thindex')}?per_page=7&include_permissions=true&packages_restrict_upgradable=${selectedAction === 'upgrade'}`;
+export const getPackagesUrl = (selectedAction) => {
+  console.log('selectedAction', selectedAction);
+  if (selectedAction === REMOVE) {
+    return `${katelloApi.getApiUrl('/packages/installed_packages')}?per_page=7&include_permissions=true`;
+  }
+  else {
+    return `${katelloApi.getApiUrl('/packages/thindex')}?per_page=7&include_permissions=true&packages_restrict_upgradable=${selectedAction === 'upgrade'}`;
+  }
+};
 
 const BulkPackagesWizard = () => {
   const { modalOpen, setModalClosed: closeModal } = useForemanModal({ id: 'bulk-packages-wizard' });

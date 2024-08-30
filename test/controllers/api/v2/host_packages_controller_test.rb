@@ -33,6 +33,16 @@ module Katello
       assert_response :success
     end
 
+    def test_installed_packages
+      require 'pry'; binding.pry
+      response = get :installed_packages
+
+      assert_response :success
+      assert_template "katello/api/v2/packages/installed_packages"
+
+      response_data = JSON.parse(response.body)
+    end
+
     def test_include_latest_upgradable
       HostPackagePresenter.expects(:with_latest).with(anything, @host)
 

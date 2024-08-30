@@ -82,8 +82,9 @@ Foreman::Application.routes.draw do
             match '/subscriptions/' => 'host_subscriptions#create', :via => :post
           end
 
-          resources :packages, :only => [:index], :controller => :host_packages do
+          resources :packages, :only => [:index, :installed_packages], :controller => :host_packages do
             get :auto_complete_search, :on => :collection
+            match "/packages/installed_packages" => "host_packages#installed_packages", :via => :get
           end
 
           resources :module_streams, :only => [:index], :controller => :host_module_streams do
