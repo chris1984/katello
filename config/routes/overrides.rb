@@ -80,11 +80,11 @@ Foreman::Application.routes.draw do
             match '/bulk/module_streams' => 'hosts_bulk_actions#module_streams', :via => :post
             match '/bulk/change_content_source' => 'hosts_bulk_actions#change_content_source', :via => :put
             match '/subscriptions/' => 'host_subscriptions#create', :via => :post
+            match '/host_packages/installed_packages' => 'host_packages#installed_packages', :via => :get
           end
 
-          resources :packages, :only => [:index, :installed_packages], :controller => :host_packages do
+          resources :packages, :only => [:index], :controller => :host_packages do
             get :auto_complete_search, :on => :collection
-            match "/packages/installed_packages" => "host_packages#installed_packages", :via => :get
           end
 
           resources :module_streams, :only => [:index], :controller => :host_module_streams do

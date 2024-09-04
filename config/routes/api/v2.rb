@@ -267,7 +267,6 @@ Katello::Engine.routes.draw do
         end
 
         match "/packages/thindex" => "packages#thindex", :via => :get
-        match "/packages/installed_packages" => "host_packages#installed_packages", :via => :get
 
         api_resources :packages, :only => [:index, :show] do
           collection do

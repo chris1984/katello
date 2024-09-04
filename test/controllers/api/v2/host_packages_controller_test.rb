@@ -17,12 +17,9 @@ module Katello
     def setup
       setup_controller_defaults_api
       login_user(users(:admin))
-      @request.env['HTTP_ACCEPT'] = 'application/json'
-
-      @host = hosts(:one)
-      @content_facet = katello_content_facets(:content_facet_one)
-      @host.content_facet = @content_facet
-
+      set_request_headers
+      setup_hosts
+      setup_installed_packages
       setup_foreman_routes
       permissions
     end
@@ -34,13 +31,17 @@ module Katello
     end
 
     def test_installed_packages
-      require 'pry'; binding.pry
       response = get :installed_packages
 
       assert_response :success
-      assert_template "katello/api/v2/packages/installed_packages"
+      assert_template layout: "katello/api/v2/layouts/collection"
+      assert_template "katello/api/v2/host_packages/installed_packages"
 
       response_data = JSON.parse(response.body)
+      results = response_data['results'] || []
+      # both hosts have the same package installed, with 'DISTINCT ON' filtering we should only get one result
+      assert_includes results.map { |rpm| rpm['name'] }, @rpm.name
+      assert_equal 1, results.size
     end
 
     def test_include_latest_upgradable
@@ -68,6 +69,29 @@ module Katello
 
         get :index, params: { :host_id => @host.id }
       end
+    end
+
+    private
+
+    def set_request_headers
+      @request.env['HTTP_ACCEPT'] = 'application/json'
+    end
+
+    def setup_hosts
+      @host = hosts(:one)
+      @host2 = hosts(:two)
+      @content_facet = katello_content_facets(:content_facet_one)
+      @host.content_facet = @content_facet
+      @host2.content_facet = katello_content_facets(:content_facet_two)
+    end
+
+    def setup_installed_packages
+      @rpm = katello_rpms(:one)
+      installed_package = Katello::InstalledPackage.create(name: @rpm.name, nvra: @rpm.nvra, version: @rpm.version, release: @rpm.release, nvrea: @rpm.nvrea, arch: @rpm.arch)
+      @host.installed_packages << installed_package
+      @host2.installed_packages << installed_package
+      @host.reload
+      @host2.reload
     end
   end
 end

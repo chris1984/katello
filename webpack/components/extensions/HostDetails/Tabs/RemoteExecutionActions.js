@@ -209,6 +209,16 @@ export const removePackage = ({ hostname, packageName }) => post({
   errorToast,
 });
 
+// Used by packages wizard
+export const removePackages = ({ hostname, search, descriptionFormat }) => post({
+  type: API_OPERATIONS.POST,
+  key: REX_JOB_INVOCATIONS_KEY,
+  url: foremanApi.getApiUrl('/job_invocations'),
+  params: katelloPackageRemoveParams({ hostname, search, descriptionFormat }),
+  handleSuccess: showRexToast,
+  errorToast,
+});
+
 export const removePackagesBySearch = ({
   hostname, hostSearch, search, descriptionFormat,
 }) => post({
